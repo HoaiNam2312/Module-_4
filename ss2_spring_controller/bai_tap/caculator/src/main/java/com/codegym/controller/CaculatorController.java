@@ -14,7 +14,7 @@ public class CaculatorController {
     }
 
     @PostMapping("/result")
-    public String showResult(@RequestParam double soA, @RequestParam double soB,@RequestParam String caculation, Model model) {
+    public String showResult(@RequestParam(value = "soA",required = false,defaultValue = "0") double soA, @RequestParam(value = "soB",required = false,defaultValue = "0") double soB,@RequestParam String caculation, Model model) {
         Double result = null;
         switch (caculation) {
             case "Addition(+)":
