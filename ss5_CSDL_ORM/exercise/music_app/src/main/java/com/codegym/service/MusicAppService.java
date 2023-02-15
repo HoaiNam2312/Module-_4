@@ -1,6 +1,7 @@
 package com.codegym.service;
 
 import com.codegym.model.MusicApp;
+import com.codegym.repository.IMusicAppRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,29 +9,29 @@ import java.util.List;
 @Service
 public class MusicAppService implements IMusicAppService {
     @Autowired
-    IMusicAppService iMusicAppService;
+    IMusicAppRepository iMusicAppRepository;
     @Override
     public List<MusicApp> findAll() {
-        return iMusicAppService.findAll();
+        return iMusicAppRepository.findAll();
     }
 
     @Override
     public void save(MusicApp musicApp) {
-    iMusicAppService.save(musicApp);
+    iMusicAppRepository.save(musicApp);
     }
 
     @Override
     public MusicApp findById(int id) {
-        return iMusicAppService.findById(id);
+        return iMusicAppRepository.findById(id);
     }
 
     @Override
     public void update(int id, MusicApp musicApp) {
-        iMusicAppService.update(id,musicApp);
+        iMusicAppRepository.update(id,musicApp);
     }
 
     @Override
     public void remove(int id) {
-        iMusicAppService.remove(id);
+        iMusicAppRepository.remove(id);
     }
 }

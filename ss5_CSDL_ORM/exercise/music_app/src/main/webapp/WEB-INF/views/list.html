@@ -25,7 +25,7 @@
         <th>Tên</th>
         <th>Nghệ sĩ</th>
         <th>Thể loại</th>
-        <th>Đường dẫn</th>
+        <th hidden>Đường dẫn</th>
         <th>Edit</th>
         <th>Delete</th>
         <th>Play</th>
@@ -37,10 +37,10 @@
         <td th:text="${row.name}"></td>
         <td th:text="${row.artist}"></td>
         <td th:text="${row.kindOfMusic}"></td>
-        <td th:text="${row.songFilePath}"></td>
+        <td th:text="${row.songFilePath}" hidden></td>
         <td><a th:href="@{/musicapp/edit(id=${row.getId()})}">Edit</a></td>
         <td><a th:href="@{/musicapp/delete(id=${row.getId()})}">Delete</a></td>
-        <td><a th:href="@{/musicapp/play(id=${row.getId()})}">Play</a></td>
+        <td><a th:href="${row.songFilePath}" target="_blank">Play</a></td>
     </tr>
     </tbody>
 </table>
