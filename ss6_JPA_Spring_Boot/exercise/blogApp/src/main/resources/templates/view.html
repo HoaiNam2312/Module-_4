@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<h3>Bài viết <span th:text="${blog.title}"></span></h3>
+<p>
+    <a th:href="@{/blog}">
+        Quay về danh sách Blog
+    </a>
+</p>
+<div th:object="${blog}">
+    <table id = "customers">
+        <thead>
+        <tr>
+            <th th:text="*{title}"></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="*{content}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
