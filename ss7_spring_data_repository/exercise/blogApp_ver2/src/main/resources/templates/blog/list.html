@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout::head}">
+
+</head>
+<body>
+<h3>Ứng dụng Blog</h3>
+<p>
+    <a th:href="@{/category}">
+        Danh sách thể loại
+    </a>
+    <br><br>
+    <a th:href="@{/blog/create}">
+        Thêm mới Blog
+    </a>
+</p>
+
+<div class="notify">
+    <div th:if="${success}">
+        <span th:text="${success}"></span>
+    </div>
+</div>
+
+<div id="form">
+    <h4>Tìm kiếm bài viết</h4>
+    <form action="#" th:action="@{/blog}" method="get">
+        <input type="text" name="searchName" placeholder="Nhập tên blog bạn muốn tìm" th:value="${searchName}">
+        <select name="searchCategory">
+            <option th:each="temp : ${categories}" th:value="${temp.id}" th:text="${temp.name}"></option>
+        </select><br>
+        <input type="submit" value="Search"/>
+    </form>
+</div>
+
+
+<table id = "blog">
+    <thead>
+    <tr>
+        <th>Tiêu đề</th>
+        <th>Thể loại</th>
+        <th>Thời gian xuất bản</th>
+        <th>Chỉnh sửa</th>
+        <th>Xóa</th>
+        <th>Xem</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row,rowStat : ${pages}">
+        <td th:text="${row.name}"></td>
+        <td th:text="${row.category.name}"></td>
+        <td th:text="${row.postTime}"></td>
+        <td><a th:href="@{/blog/edit(id=${row.getId()})}">Chỉnh sửa</a></td>
+        <td><a th:href="@{/blog/delete(id=${row.getId()})}">Xóa</a></td>
+        <td><a th:href="@{/blog/view(id=${row.getId()})}" target="_blank">Xem</a></td>
+    </tr>
+    </tbody>
+</table>
+<a th:href="@{/blog(page=${pages.number - 1},searchName=${searchName},searchCategory=${searchCategory})}" th:if="${pages.hasPrevious()}">Previous</a>
+<span th:text="${pages.number+1}"></span>/<span th:text="${pages.totalPages}"></span>
+<a th:href="@{/blog(page=${pages.number + 1},searchName=${searchName},searchCategory=${searchCategory})}" th:if="${pages.hasNext()}">Next</a>
+<footer th:replace="~{layout::footer}"></footer>
+</body>
+</html>
