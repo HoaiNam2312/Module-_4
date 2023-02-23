@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<h3>Chỉnh sửa Blog</h3>
+<p>
+    <a th:href="@{/blog}">
+        Quay lại danh sách Blog
+    </a>
+</p>
+<div id="form">
+    <form action="#" th:action="@{/blog/update}" th:object="${blog}"
+          method="POST" novalidate="novalidate">
+        <input type="hidden" th:field="*{id}"/>
+        <div>
+            <label>Tên bài viết:</label>
+            <input type="text" th:field="*{name}" required/>
+        </div>
+        <div>
+            <label>Tác giả:</label>
+            <input type="text" th:field="*{author}" required/>
+        </div>
+        <div>
+            <label>Nội dung:</label>
+            <input type="text" th:field="*{content}" required/>
+        </div>
+        <div>
+            <label>Thể loại:</label>
+            <select th:field="*{category}" required>
+                <option th:each="temp : ${categories}" th:value="${temp.id}" th:text="${temp.name}"></option>
+            </select>
+        </div>
+        <div>
+            <label>Ngày xuất bản:</label>
+            <input type="date" th:field="*{postTime}" required>
+        </div>
+        <input type="submit" value="Edit"/>
+    </form>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>

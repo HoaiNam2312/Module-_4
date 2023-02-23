@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout::head}">
+
+</head>
+<body>
+<h3>Thể loại bài viết</h3>
+<p>
+    <a th:href="@{/category/create}">
+        Thêm mới thể loại.
+    </a><br><br>
+    <a th:href="@{/blog}">
+        Quay lại danh sách bài viết.
+    </a>
+</p>
+
+<div class="notify">
+    <div th:if="${success}">
+        <span th:text="${success}"></span>
+    </div>
+</div>
+
+
+<table id = "blog">
+    <thead>
+    <tr>
+        <th>Thể loại</th>
+        <th>Chỉnh sửa</th>
+        <th>Xóa</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row,rowStat : ${categories}">
+        <td th:text="${row.name}"></td>
+        <td><a th:href="@{/category/edit(id=${row.getId()})}">Chỉnh sửa</a></td>
+        <td><a th:href="@{/category/delete(id=${row.getId()})}">Xóa</a></td>
+    </tr>
+    </tbody>
+</table>
+<footer th:replace="~{layout::footer}"></footer>
+</body>
+</html>

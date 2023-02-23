@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout::head}">
+
+</head>
+<body>
+<div th:replace="~{layout::menu}"></div>
+<div class="container bg-transparent mt-5">
+    <div class="row">
+        <div class="col-4 mt-3">
+            <a class="btn btn-secondary" th:href="@{/blog/create}" role="button">Thêm mới bài viết </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 mt-3"></div>
+        <div class="col-6 mt-3">
+            <form th:action="@{/blog}" th:method="get">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Nhập tiêu đề cần tìm"
+                           aria-label="Recipient's username"
+                           aria-describedby="button-addon2" name="searchName">
+                    <select name="searchCategory" class="form-select" aria-label="Default select example">
+                        <option th:value="0" selected>Chọn thể loại</option>
+                        <option th:each="temp : ${categories}" th:value="${temp.id}" th:text="${temp.name}"></option>
+                    </select>
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Tìm kiếm</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-3 mt-3"></div>
+    </div>
+    <!--       Bảng danh sách-->
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <table id="tableStudent" class="table table-primary table-bordered"
+                   style="background-color: white ;width:100%; font-size: small">
+                <thead>
+                <tr>
+                    <th>Tiêu đề</th>
+                    <th>Thể loại</th>
+                    <th>Thời gian xuất bản</th>
+                    <th>
+                        <div class="d-flex justify-content-center">
+                        Chỉnh sửa</div>
+                    </th>
+                    <th>
+                        <div class="d-flex justify-content-center">
+                        Xóa</div>
+                    </th>
+                    <th>
+                        <div class="d-flex justify-content-center">
+                        Đọc bài viết</div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row,rowStat : ${pages}">
+                    <td th:text="${row.name}"></td>
+                    <td th:text="${row.category.name}"></td>
+                    <td th:text="${row.postTime}"></td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <div>
+                                <a class="btn btn-danger" role="button" th:href="@{/blog/edit(id=${row.getId()})}">Chỉnh
+                                    sửa</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <div>
+                                <a class="btn btn-danger" role="button"
+                                   th:href="@{/blog/delete(id=${row.getId()})}">Xóa</a>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <div>
+                                <a class="btn btn-danger" role="button" th:href="@{/blog/view(id=${row.getId()})}"
+                                   target="_blank">Đọc</a>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3 mt-3"></div>
+        <div class="col-2 mt-3 d-flex justify-content-end">
+            <div>
+                <a class="btn btn-secondary" role="button"
+                   th:href="@{/blog(page=${pages.number - 1},searchName=${searchName},searchCategory=${searchCategory})}"
+                   th:if="${pages.hasPrevious()}">Trang sau</a>
+            </div>
+        </div>
+        <div class="col-2 mt-3 d-flex justify-content-center">
+            <div>
+                <span th:text="${pages.number+1}"></span>/<span th:text="${pages.totalPages}"></span>
+            </div>
+        </div>
+        <div class="col-2 mt-3">
+            <a class="btn btn-secondary" role="button"
+               th:href="@{/blog(page=${pages.number + 1},searchName=${searchName},searchCategory=${searchCategory})}"
+               th:if="${pages.hasNext()}">Trang tiếp theo</a>
+        </div>
+        <div class="col-3 mt-3"></div>
+    </div>
+</div>
+
+<footer th:replace="~{layout::footer}"></footer>
+</body>
+</html>

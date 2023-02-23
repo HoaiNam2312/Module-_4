@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="/layout :: head"></head>
+<body>
+<h3>Xóa Blog</h3>
+<p>
+  <a th:href="@{/blog}">
+    Quay về danh sách Blog
+  </a>
+</p>
+<div id="form">
+  <form action="#" th:action="@{/blog/delete}" th:object="${blog}"
+        method="POST" novalidate="novalidate">
+    <input type="hidden" th:field="*{id}" readonly/>
+    <div>
+      <label>Tên bài viết:</label>
+      <input type="text" th:field="*{name}" readonly/>
+    </div>
+    <div>
+      <label>Tác giả:</label>
+      <input type="text" th:field="*{author}" readonly/>
+    </div>
+    <div>
+      <label>Nội dung:</label>
+      <input type="text" th:field="*{content}" readonly/>
+    </div>
+    <div>
+      <label>Thể loại:</label>
+      <select th:field="*{category}">
+        <option th:value="*{category.id}" th:text="*{category.name}"></option>
+      </select>
+    </div>
+    <div>
+      <label>Ngày xuất bản:</label>
+      <input type="date" th:field="*{postTime}" readonly>
+    </div>
+    <input type="submit" value="Remove"/>
+  </form>
+</div>
+<footer th:replace="/layout :: footer"></footer>
+</body>
+</html>
