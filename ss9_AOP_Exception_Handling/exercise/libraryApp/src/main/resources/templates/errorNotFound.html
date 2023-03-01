@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout::head}">
+
+</head>
+<body>
+
+<div th:replace="~{layout::menu}"></div>
+
+<div class="row">
+    <div class="col-4">
+
+    </div>
+    <div class="col-4">
+        <div class="row mt-5">
+            <div class="col-12 d-flex justify-content-center">
+                <h2 style="color: red">Mã sách này không tồn tại</h2>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 d-flex justify-content-center">
+                <button><a class="btn btn-danger" role="button" th:href="@{/book/returnBook}">Quay lại trang trả sách</a></button>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+<footer th:replace="~{layout::footer}"></footer>
+</body>
+</html>

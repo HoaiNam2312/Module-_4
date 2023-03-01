@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout::head}">
+
+</head>
+<body>
+
+<div th:replace="~{layout::menu}"></div>
+<h2 style="color: red">Hiện tại sách này đã hết</h2>
+<button><a class="btn btn-danger" role="button" th:href="@{/}">Quay lại trang chủ</a></button>
+<footer th:replace="~{layout::footer}"></footer>
+</body>
+</html>

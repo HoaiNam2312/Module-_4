@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="/layout :: head"></head>
+<head th:replace="~{layout :: head}"></head>
 <body>
 <h3>Thêm mới blog</h3>
 <p>
@@ -10,20 +10,23 @@
 </p>
 
 <div id="form">
-    <form th:action="@{/blog/save}" th:object="${blog}"
+    <form th:action="@{/blog/save}" th:object="${blogDto}"
           method="POST" novalidate="novalidate">
         <input type="hidden" th:field="*{id}"/>
         <div>
             <label>Tên bài viết:</label>
             <input type="text" th:field="*{name}" required/>
+            <span style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></span>
         </div>
         <div>
             <label>Tác giả:</label>
             <input type="text" th:field="*{author}" required/>
+            <span style="color: red" th:if="${#fields.hasErrors('author')}" th:errors="*{author}"></span>
         </div>
         <div>
             <label>Nội dung:</label>
             <input type="text" th:field="*{content}" required/>
+            <span style="color: red" th:if="${#fields.hasErrors('content')}" th:errors="*{content}"></span>
         </div>
         <div>
             <label>Thể loại:</label>
@@ -34,10 +37,11 @@
         <div>
             <label>Ngày xuất bản:</label>
             <input type="date" th:field="*{postTime}" required>
+            <span style="color: red" th:if="${#fields.hasErrors('postTime')}" th:errors="*{postTime}"></span>
         </div>
         <input type="submit" value="Save"/>
     </form>
 </div>
-<footer th:replace="/layout :: footer"></footer>
+<footer th:replace="~{layout :: footer}"></footer>
 </body>
 </html>

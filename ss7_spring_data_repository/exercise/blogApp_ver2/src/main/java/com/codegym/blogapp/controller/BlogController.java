@@ -1,8 +1,10 @@
 package com.codegym.blogapp.controller;
 
+import com.codegym.blogapp.dto.BlogDto;
 import com.codegym.blogapp.model.Blog;
 import com.codegym.blogapp.service.blog.IBlogService;
 import com.codegym.blogapp.service.category.ICategoryService;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -51,13 +55,19 @@ public class BlogController {
 
     @GetMapping("/create")
     public String showCreateForm(Model model) {
-        model.addAttribute("blog", new Blog());
+        model.addAttribute("blogDto", new BlogDto());
         model.addAttribute("categories", iCategoryService.findAll());
         return "/blog/create";
     }
 
     @PostMapping("/save")
-    public String saveBlogNew(Blog blog, RedirectAttributes redirectAttributes) {
+    public String saveBlogNew(@Validated BlogDto blogDto, BindingResult bindingResult, RedirectAttributes redirectAttributes,Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("categories", iCategoryService.findAll());
+            return "/blog/create";
+        }
+        Blog blog = new Blog();
+        BeanUtils.copyProperties(blogDto,blog);
         iBlogService.save(blog);
         redirectAttributes.addFlashAttribute("success", "Thêm mới thành công");
         return "redirect:/blog";
@@ -66,8 +76,6 @@ public class BlogController {
     @GetMapping("/delete")
     public String showDeleteForm(@RequestParam int id, Model model) {
         model.addAttribute("blog", iBlogService.findById(id));
-        model.addAttribute("categories", iCategoryService.findAll());
-
         return "/blog/delete";
     }
 

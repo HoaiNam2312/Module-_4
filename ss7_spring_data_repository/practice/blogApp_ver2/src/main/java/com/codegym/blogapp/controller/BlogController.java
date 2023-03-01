@@ -67,14 +67,13 @@ public class BlogController {
     public String showDeleteForm(@RequestParam int id, Model model) {
         model.addAttribute("blog", iBlogService.findById(id));
         model.addAttribute("categories", iCategoryService.findAll());
-
         return "/blog/delete";
     }
 
     @PostMapping("/delete")
     public String deleteBlog(Blog blog, RedirectAttributes redirectAttributes) {
         iBlogService.remove(blog.getId());
-        redirectAttributes.addFlashAttribute("success", "xóa thành công");
+        redirectAttributes.addFlashAttribute("success", "Xóa thành công");
         return "redirect:/blog";
     }
 

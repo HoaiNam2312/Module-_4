@@ -14,7 +14,9 @@ import javax.validation.constraints.*;
 public class User implements Validator {
 
     @NotBlank(message = "Không được để trống")
-    @Size(min = 5, max = 45,message = "Có độ dài tối thiểu 5, tối đa 45 ký tự")
+    @Pattern(regexp = "^([A-Z][aAàÀảẢãÃáÁạẠăĂằẰẳẲẵẴắẮặẶâÂầẦẩẨẫẪấẤậẬbBcCdDđĐeEèÈẻẺẽẼéÉẹẸêÊềỀểỂễỄếẾệỆ\n" +
+            "fFgGhHiIìÌỉỈĩĨíÍịỊjJkKlLmMnNoOòÒỏỎõÕóÓọỌôÔồỒổỔỗỖốỐộỘơƠờỜởỞỡỠớỚợỢpPqQrRsStTu\n" +
+            "UùÙủỦũŨúÚụỤưƯừỪửỬữỮứỨựỰvVwWxXyYỳỲỷỶỹỸýÝỵỴzZ]+|\\s)+$", message = "Vui lòng viết hoa chữ cái đầu tiên và chữ có dấu")
     private String firstName;
 
     @NotBlank(message = "Không được để trống")
