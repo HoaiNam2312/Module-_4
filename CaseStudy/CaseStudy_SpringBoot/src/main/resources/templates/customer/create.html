@@ -14,21 +14,18 @@
     <div class="row mt-5" style="padding-left: 20px">
         <div class="col-6">
             <div class="row bg-transparent">
-                <form th:action="@{/customer/save}" th:object="${customer}" method="post">
+                <form th:action="@{/customer/save}" th:object="${customerDto}" method="post">
                     <table class="table table-borderless">
-                        <tr hidden>
-                            <td colspan="5"><label for="id">Id: </label></td>
-                            <td colspan="3"><input type="hidden" id="id" th:field="*{id}"></td>
-                        </tr>
-
                         <tr>
                             <td colspan="5"><label for="name">Tên: </label></td>
-                            <td colspan="3"><input type="text" id="name" th:field="*{name}" placeholder="Nhập tiêu đề bài viết"></td>
+                            <td colspan="3"><input type="text" id="name" th:field="*{name}" placeholder="Nhập tiêu đề bài viết">
+                                <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p></td>
                         </tr>
 
                         <tr>
-                            <td colspan="5"><label for="author">Ngày sinh: </label></td>
-                            <td colspan="3"><input id="author" th:field="*{birthday}" type="date"></td>
+                            <td colspan="5"><label for="birthday">Ngày sinh: </label></td>
+                            <td colspan="3"><input id="birthday" th:field="*{birthday}" type="text">
+                            <p style="color: red" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></p></td>
                         </tr>
 
                         <tr>
@@ -45,22 +42,23 @@
 
                         <tr>
                             <td colspan="5"><label for="pn">Mã khách hàng: </label></td>
-                            <td colspan="3"><input type="text" id="pn" th:field="*{idCard}"></td>
+                            <td colspan="3"><input type="text" id="pn" th:field="*{idCard}"><p style="color: red" th:if="${#fields.hasErrors('idCard')}" th:errors="*{idCard}"></p></td>
                         </tr>
 
                         <tr>
                             <td colspan="5"><label for="phone">Số điện thoại: </label></td>
-                            <td colspan="3"><input type="text" id="phone" th:field="*{phone}"></td>
+                            <td colspan="3"><input type="text" id="phone" th:field="*{phone}">
+                            <p style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p></td>
                         </tr>
 
                         <tr>
                             <td colspan="5"><label for="email">Email: </label></td>
-                            <td colspan="3"><input type="text" id="email" th:field="*{email}"></td>
+                            <td colspan="3"><input type="text" id="email" th:field="*{email}"><p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p></td>
                         </tr>
 
                         <tr>
                             <td colspan="5"><label for="address">Địa chỉ: </label></td>
-                            <td colspan="3"><input type="text" id="address" th:field="*{address}"></td>
+                            <td colspan="3"><input type="text" id="address" th:field="*{address}"><p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p></td>
                         </tr>
 
                         <tr>
@@ -68,12 +66,12 @@
                             <td colspan="3">
                                 <label>
                                     <select th:field="*{customerType}" class="form-select" aria-label="Default select example">
-                                        <option th:value="0" selected>Chọn loại khách hàng</option>
+                                        <option th:value="${0}" selected>Chọn loại khách hàng</option>
                                         <option th:each="temp : ${customerTypeList}" th:value="${temp.id}"
                                                 th:text="${temp.name}"></option>
                                     </select>
                                 </label>
-                            </td>
+                           <p style="color: red" th:if="${#fields.hasErrors('customerType')}" th:errors="*{customerType}"></p></td>
                         </tr>
 
                         <tr>

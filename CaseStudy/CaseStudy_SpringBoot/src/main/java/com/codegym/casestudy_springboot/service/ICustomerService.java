@@ -13,6 +13,18 @@ public interface ICustomerService {
 
     Customer findById(int id);
 
-    void remove(int id);
-    Page<Customer> search(Pageable pageable);
+    void deleteById(int id);
+
+    Page<Customer> paqing(Pageable pageable);
+
+//    Page<Customer> paginationByName(String name, Pageable pageable);
+
+//    Page<Customer> paginationByIdCard(String idCard, Pageable pageable);
+//
+//    Page<Customer> paginationByCustomerType_Id(Integer id, Pageable pageable);
+//
+    Page<Customer> paginationByNameAndIdCard(String name,String idCard, Pageable pageable);
+//    Page<Customer> paginationByNameAndCustomerType_Id(String name,Integer id, Pageable pageable);
+//    Page<Customer> paginationByIdCardAndCustomerType_Id(String idCard,Integer id, Pageable pageable);
+    Page<Customer> paginationByNameAndIdCardAndCustomerType_Id(String name,String idCard,Integer id, Pageable pageable);
 }

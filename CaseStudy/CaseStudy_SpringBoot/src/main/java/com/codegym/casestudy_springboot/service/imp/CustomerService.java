@@ -32,12 +32,47 @@ public class CustomerService implements ICustomerService {
     }
 
     @Override
-    public void remove(int id) {
+    public void deleteById(int id) {
         iCustomerRepository.deleteById(id);
     }
 
     @Override
-    public Page<Customer> search(Pageable pageable) {
+    public Page<Customer> paqing(Pageable pageable) {
         return iCustomerRepository.findAll(pageable);
+    }
+
+//    @Override
+//    public Page<Customer> paginationByName(String name, Pageable pageable) {
+//        return iCustomerRepository.findByNameContaining(name, pageable);
+//    }
+
+//    @Override
+//    public Page<Customer> paginationByIdCard(String idCard, Pageable pageable) {
+//        return iCustomerRepository.findByIdCardContaining(idCard, pageable);
+//    }
+//
+//    @Override
+//    public Page<Customer> paginationByCustomerType_Id(Integer id, Pageable pageable) {
+//        return iCustomerRepository.findByCustomerType_Id(id, pageable);
+//    }
+//
+    @Override
+    public Page<Customer> paginationByNameAndIdCard(String name, String idCard, Pageable pageable) {
+        return iCustomerRepository.findByNameContainingAndIdCardContaining(name, idCard, pageable);
+    }
+//
+//    @Override
+//    public Page<Customer> paginationByNameAndCustomerType_Id(String name, Integer id, Pageable pageable) {
+//        return iCustomerRepository.findByNameContainingAndCustomerType_Id(name, id, pageable);
+//    }
+//
+//    @Override
+//    public Page<Customer> paginationByIdCardAndCustomerType_Id(String idCard, Integer id, Pageable pageable) {
+//        return iCustomerRepository.findByIdCardContainingAndCustomerType_Id(idCard, id, pageable);
+//    }
+//
+    @Override
+    public Page<Customer> paginationByNameAndIdCardAndCustomerType_Id(String name, String idCard, Integer id, Pageable pageable) {
+        return iCustomerRepository.findByNameContainingAndIdCardContainingAndCustomerType_Id(name, idCard, id, pageable);
     }
 }
