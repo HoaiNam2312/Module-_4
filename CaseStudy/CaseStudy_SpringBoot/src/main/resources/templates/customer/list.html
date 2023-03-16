@@ -183,120 +183,120 @@
 
                     <!--                    Edit-->
                     <td colspan="2">
-                        <!--                        <div class="d-flex justify-content-center">-->
-                        <!--                            <a class="btn btn-danger" role="button" th:href="@{/customer/edit(id=${row.getId()})}">Chỉnh-->
-                        <!--                                sửa</a>-->
-                        <!--                        </div>-->
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                th:attr="data-bs-target='#editModal'+${row.id}">Chỉnh sửa
-                        </button>
-                        <div class="modal fade" th:id="'editModal'+${row.id}" tabindex="-1"
-                             aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="editModalLabel">Chỉnh sửa:</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
-                                    </div>
-                                    <form th:action="@{customer/edit(id=${row.id})}" th:object="${customerEdit}"
-                                          method="post">
-                                        <div class="modal-body">
-                                            <table class="table table-borderless">
-                                                <tr>
-                                                    <td><label for="nameEdit">Tên: </label></td>
-                                                    <td><input type="text" id="nameEdit" th:value="${row.name}"></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td><label for="birthdayEdit">Ngày sinh: </label></td>
-                                                    <td><input id="birthdayEdit" th:value="${row.birthday}" type="date">
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td><label>Giới tính: </label></td>
-                                                    <td>
-                                                        <div th:if="${row.gender}">
-                                                            <input type="radio" id="optionEdit"
-                                                                   class="custom-control-input"
-                                                                   value="0">
-                                                            <label class="custom-control-label"
-                                                                   for="optionEdit">Nữ</label>
-                                                            <input type="radio" id="option1Edit"
-                                                                   class="custom-control-input"
-                                                                   value="1" checked>
-                                                            <label class="custom-control-label"
-                                                                   for="option1Edit">Nam</label>
-                                                        </div>
-
-                                                        <div th:if="${!row.gender}">
-                                                            <input type="radio" id="optionEdit2"
-                                                                   class="custom-control-input"
-                                                                   value="0" checked>
-                                                            <label class="custom-control-label"
-                                                                   for="optionEdit2">Nữ</label>
-                                                            <input type="radio" id="option1Edit3"
-                                                                   class="custom-control-input"
-                                                                   value="1">
-                                                            <label class="custom-control-label"
-                                                                   for="option1Edit3">Nam</label>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td><label for="customerTypeEdit">Mã khách hàng: </label></td>
-                                                    <td><input type="text" id="customerTypeEdit"
-                                                               th:value="${row.idCard}"></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td><label for="phoneEdit">Số điện thoại: </label></td>
-                                                    <td><input type="text" id="phoneEdit" th:value="${row.phone}"></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td><label for="emailEdit">Email: </label></td>
-                                                    <td><input type="text" id="emailEdit" th:value="${row.email}"></td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td><label for="addressEdit">Địa chỉ: </label></td>
-                                                    <td><input type="text" id="addressEdit" th:value="${row.address}">
-                                                    </td>
-                                                </tr>
-
-                                                <tr>
-                                                    <td><label>Loại khách hàng: </label></td>
-                                                    <td>
-                                                        <label>
-                                                            <select class="form-select"
-                                                                    aria-label="Default select example">
-                                                                <option th:each="temp : ${customerTypeList}"
-                                                                        th:if="${row.customerType.id==temp.id}"
-                                                                        th:value="${temp.id}"
-                                                                        th:text="${temp.name}"></option>
-                                                                <option th:each="temp : ${customerTypeList}"
-                                                                        th:if="${row.customerType.id!=temp.id}"
-                                                                        th:value="${temp.id}"
-                                                                        th:text="${temp.name}"></option>
-                                                            </select>
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                            </table>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy
-                                            </button>
-                                            <button type="submit" class="btn btn-primary">Cập nhập</button>
-                                        </div>
-                                    </form>
-                                </div>
-                            </div>
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-danger" role="button" th:href="@{/customer/edit(id=${row.getId()})}">Chỉnh
+                                sửa</a>
                         </div>
+                        <!--                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"-->
+                        <!--                                th:attr="data-bs-target='#editModal'+${row.id}">Chỉnh sửa-->
+                        <!--                        </button>-->
+                        <!--                        <div class="modal fade" th:id="'editModal'+${row.id}" tabindex="-1"-->
+                        <!--                             aria-labelledby="exampleModalLabel"-->
+                        <!--                             aria-hidden="true">-->
+                        <!--                            <div class="modal-dialog">-->
+                        <!--                                <div class="modal-content">-->
+                        <!--                                    <div class="modal-header">-->
+                        <!--                                        <h5 class="modal-title" id="editModalLabel">Chỉnh sửa:</h5>-->
+                        <!--                                        <button type="button" class="btn-close" data-bs-dismiss="modal"-->
+                        <!--                                                aria-label="Close"></button>-->
+                        <!--                                    </div>-->
+                        <!--                                    <form th:action="@{customer/edit(id=${row.id})}" th:object="${customerEdit}"-->
+                        <!--                                          method="post">-->
+                        <!--                                        <div class="modal-body">-->
+                        <!--                                            <table class="table table-borderless">-->
+                        <!--                                                <tr>-->
+                        <!--                                                    <td><label for="nameEdit">Tên: </label></td>-->
+                        <!--                                                    <td><input type="text" id="nameEdit" th:value="${row.name}"></td>-->
+                        <!--                                                </tr>-->
+
+                        <!--                                                <tr>-->
+                        <!--                                                    <td><label for="birthdayEdit">Ngày sinh: </label></td>-->
+                        <!--                                                    <td><input id="birthdayEdit" th:value="${row.birthday}" type="date">-->
+                        <!--                                                    </td>-->
+                        <!--                                                </tr>-->
+
+                        <!--                                                <tr>-->
+                        <!--                                                    <td><label>Giới tính: </label></td>-->
+                        <!--                                                    <td>-->
+                        <!--                                                        <div th:if="${row.gender}">-->
+                        <!--                                                            <input type="radio" id="optionEdit"-->
+                        <!--                                                                   class="custom-control-input"-->
+                        <!--                                                                   value="0">-->
+                        <!--                                                            <label class="custom-control-label"-->
+                        <!--                                                                   for="optionEdit">Nữ</label>-->
+                        <!--                                                            <input type="radio" id="option1Edit"-->
+                        <!--                                                                   class="custom-control-input"-->
+                        <!--                                                                   value="1" checked>-->
+                        <!--                                                            <label class="custom-control-label"-->
+                        <!--                                                                   for="option1Edit">Nam</label>-->
+                        <!--                                                        </div>-->
+
+                        <!--                                                        <div th:if="${!row.gender}">-->
+                        <!--                                                            <input type="radio" id="optionEdit2"-->
+                        <!--                                                                   class="custom-control-input"-->
+                        <!--                                                                   value="0" checked>-->
+                        <!--                                                            <label class="custom-control-label"-->
+                        <!--                                                                   for="optionEdit2">Nữ</label>-->
+                        <!--                                                            <input type="radio" id="option1Edit3"-->
+                        <!--                                                                   class="custom-control-input"-->
+                        <!--                                                                   value="1">-->
+                        <!--                                                            <label class="custom-control-label"-->
+                        <!--                                                                   for="option1Edit3">Nam</label>-->
+                        <!--                                                        </div>-->
+                        <!--                                                    </td>-->
+                        <!--                                                </tr>-->
+
+                        <!--                                                <tr>-->
+                        <!--                                                    <td><label for="customerTypeEdit">Mã khách hàng: </label></td>-->
+                        <!--                                                    <td><input type="text" id="customerTypeEdit"-->
+                        <!--                                                               th:value="${row.idCard}"></td>-->
+                        <!--                                                </tr>-->
+
+                        <!--                                                <tr>-->
+                        <!--                                                    <td><label for="phoneEdit">Số điện thoại: </label></td>-->
+                        <!--                                                    <td><input type="text" id="phoneEdit" th:value="${row.phone}"></td>-->
+                        <!--                                                </tr>-->
+
+                        <!--                                                <tr>-->
+                        <!--                                                    <td><label for="emailEdit">Email: </label></td>-->
+                        <!--                                                    <td><input type="text" id="emailEdit" th:value="${row.email}"></td>-->
+                        <!--                                                </tr>-->
+
+                        <!--                                                <tr>-->
+                        <!--                                                    <td><label for="addressEdit">Địa chỉ: </label></td>-->
+                        <!--                                                    <td><input type="text" id="addressEdit" th:value="${row.address}">-->
+                        <!--                                                    </td>-->
+                        <!--                                                </tr>-->
+
+                        <!--                                                <tr>-->
+                        <!--                                                    <td><label>Loại khách hàng: </label></td>-->
+                        <!--                                                    <td>-->
+                        <!--                                                        <label>-->
+                        <!--                                                            <select class="form-select"-->
+                        <!--                                                                    aria-label="Default select example">-->
+                        <!--                                                                <option th:each="temp : ${customerTypeList}"-->
+                        <!--                                                                        th:if="${row.customerType.id==temp.id}"-->
+                        <!--                                                                        th:value="${temp.id}"-->
+                        <!--                                                                        th:text="${temp.name}"></option>-->
+                        <!--                                                                <option th:each="temp : ${customerTypeList}"-->
+                        <!--                                                                        th:if="${row.customerType.id!=temp.id}"-->
+                        <!--                                                                        th:value="${temp.id}"-->
+                        <!--                                                                        th:text="${temp.name}"></option>-->
+                        <!--                                                            </select>-->
+                        <!--                                                        </label>-->
+                        <!--                                                    </td>-->
+                        <!--                                                </tr>-->
+                        <!--                                            </table>-->
+                        <!--                                        </div>-->
+                        <!--                                        <div class="modal-footer">-->
+                        <!--                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy-->
+                        <!--                                            </button>-->
+                        <!--                                            <button type="submit" class="btn btn-primary">Cập nhập</button>-->
+                        <!--                                        </div>-->
+                        <!--                                    </form>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                     </td>
 
                     <!--Xóa-->
@@ -305,32 +305,36 @@
                         <!--                                                        <a class="btn btn-danger" role="button"-->
                         <!--                                                           th:href="@{/customer/delete(id=${row.getId()})}">Xóa</a>-->
                         <!--                                                </div>-->
-                        <button type="button" class="btn btn-danger" data-bs-toggle="modal"
-                                th:attr="data-bs-target='#exampleModal'+${row.id}">Xóa
-                        </button>
-                        <div class="modal fade" th:id="'exampleModal'+${row.id}" tabindex="-1"
-                             aria-labelledby="exampleModalLabel"
-                             aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Thông báo:</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                aria-label="Close"></button>
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    th:attr="data-bs-target='#exampleModal'+${row.id}">Xóa
+                            </button>
+                            <div class="modal fade" th:id="'exampleModal'+${row.id}" tabindex="-1"
+                                 aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Thông báo:</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <form th:action="@{customer/delete(id=${row.id})}" method="post">
+                                            <div class="modal-body">
+                                                <p>Bạn có muốn xóa: <span th:text="${row.name}"></span></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Hủy
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Xóa</button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <form th:action="@{customer/delete(id=${row.id})}" method="post">
-                                        <div class="modal-body">
-                                            <p>Bạn có muốn xóa: <span th:text="${row.name}"></span></p>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy
-                                            </button>
-                                            <button type="submit" class="btn btn-primary">Xóa</button>
-                                        </div>
-                                    </form>
                                 </div>
                             </div>
                         </div>
+
                     </td>
                 </tr>
                 </tbody>

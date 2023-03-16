@@ -1,102 +1,82 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:insert="~{layout :: head}"></head>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout::head}">
+</head>
 <body>
-<!--<h3>Chỉnh sửa Blog</h3>-->
-<!--<p>-->
-<!--    <a th:href="@{/blog}">-->
-<!--        Quay lại danh sách Blog-->
-<!--    </a>-->
-<!--</p>-->
-<!--<div id="form">-->
-<!--    <form action="#" th:action="@{/blog/update}" th:object="${blog}"-->
-<!--          method="POST" novalidate="novalidate">-->
-<!--        <input type="hidden" th:field="*{id}"/>-->
-<!--        <div>-->
-<!--            <label>Tên bài viết:</label>-->
-<!--            <input type="text" th:field="*{name}" required/>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <label>Tác giả:</label>-->
-<!--            <input type="text" th:field="*{author}" required/>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <label>Nội dung:</label>-->
-<!--            <input type="text" th:field="*{content}" required/>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <label>Thể loại:</label>-->
-<!--            <select th:field="*{category}" required>-->
-<!--                <option th:each="temp : ${categories}" th:value="${temp.id}" th:text="${temp.name}"></option>-->
-<!--            </select>-->
-<!--        </div>-->
-<!--        <div>-->
-<!--            <label>Ngày xuất bản:</label>-->
-<!--            <input type="date" th:field="*{postTime}" required>-->
-<!--        </div>-->
-<!--        <input type="submit" value="Edit"/>-->
-<!--    </form>-->
-<!--</div>-->
-
 <div th:replace="~{layout::menu}"></div>
 
 <div class="container bg-transparent mt-5">
     <div class="row mt-1">
         <div class="col-12">
-            <h1 style="text-align: center; color: deeppink">Thêm mới bài viết</h1>
+            <h1 style="text-align: center; color: deeppink">Chỉnh sửa khách hàng</h1>
         </div>
     </div>
     <div class="row mt-5" style="padding-left: 20px">
         <div class="col-6">
             <div class="row bg-transparent">
-                <form th:action="@{/blog/update}" th:object="${blog}" method="post">
+                <form th:action="@{/customer/edit}" th:object="${customerDto}" method="post">
                     <table class="table table-borderless">
-                        <tr hidden>
-                            <td colspan="5"><label for="id">Id: </label></td>
-                            <td colspan="3"><input type="hidden" id="id" th:field="*{id}"></td>
+                        <tr>
+                            <td colspan="5"><label for="name">Tên: </label></td>
+                            <td colspan="3"><input type="text" id="name" th:field="*{name}" placeholder="Nhập tiêu đề bài viết">
+                                <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p></td>
                         </tr>
 
                         <tr>
-                            <td colspan="5"><label for="name">Tiêu đề: </label></td>
-                            <td colspan="3"><input type="text" id="name" th:field="*{name}" placeholder="Nhập tiêu đề bài viết"
-                                                   required></td>
+                            <td colspan="5"><label for="birthday">Ngày sinh: </label></td>
+                            <td colspan="3"><input id="birthday" th:field="*{birthday}" type="text">
+                                <p style="color: red" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}"></p></td>
                         </tr>
 
                         <tr>
-                            <td colspan="5"><label for="author">Tên tác giả: </label></td>
-                            <td colspan="3"><input id="author" th:field="*{author}" placeholder="Nhập tên tác giả" required></td>
+                            <td colspan="5"><label>Giới tính: </label></td>
+                            <td colspan="3">
+                                <input type="radio" id="option" class="custom-control-input" value="0" th:field="*{gender}">
+                                <label class="custom-control-label" for="option">Nữ</label>
+                                <input type="radio" id="option1" class="custom-control-input" value="1" th:field="*{gender}">
+                                <label class="custom-control-label" for="option1">Nam</label>
+                            </td>
                         </tr>
 
                         <tr>
-                            <td colspan="5"><label>Thể loại: </label></td>
+                            <td colspan="5"><label for="pn">Mã khách hàng: </label></td>
+                            <td colspan="3"><input type="text" id="pn" th:field="*{idCard}"><p style="color: red" th:if="${#fields.hasErrors('idCard')}" th:errors="*{idCard}"></p></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label for="phone">Số điện thoại: </label></td>
+                            <td colspan="3"><input type="text" id="phone" th:field="*{phone}">
+                                <p style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label for="email">Email: </label></td>
+                            <td colspan="3"><input type="text" id="email" th:field="*{email}"><p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label for="address">Địa chỉ: </label></td>
+                            <td colspan="3"><input type="text" id="address" th:field="*{address}"><p style="color: red" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></p></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label>Loại khách hàng: </label></td>
                             <td colspan="3">
                                 <label>
-                                    <select th:field="*{category}" class="form-select" aria-label="Default select example">
-                                        <option th:value="0" selected>Chọn thể loại</option>
-                                        <option th:each="temp : ${categories}" th:value="${temp.id}"
+                                    <select th:field="*{customerType}" class="form-select" aria-label="Default select example">
+                                        <option th:value="${0}" selected>Chọn loại khách hàng</option>
+                                        <option th:each="temp : ${customerTypeList}" th:value="${temp.id}"
                                                 th:text="${temp.name}"></option>
                                     </select>
                                 </label>
-                            </td>
+                                <p style="color: red" th:if="${#fields.hasErrors('customerType')}" th:errors="*{customerType}"></p></td>
                         </tr>
 
-                        <tr>
-                            <td colspan="5"><label for="pn">Ngày xuất bản: </label></td>
-                            <td colspan="3"><input type="date" id="pn" th:field="*{postTime}"></td>
-                        </tr>
-
-                        <tr>
-                            <td colspan="5"><label for="content">Nội dung: </label></td>
-                            <td colspan="3">
-                                <textarea rows="6" cols="50" th:field="*{content}" id="content">
-                                </textarea>
-                            </td>
-                        </tr>
                         <tr>
                             <td colspan="5"></td>
                             <td colspan="3">
-                                <button class="btn btn-secondary" type="submit">Chỉnh sửa</button>
-                                <a class="btn btn-secondary" th:href="@{/blog}" role="button">Hủy</a>
+                                <button class="btn btn-secondary" type="submit">Xác nhận</button>
+                                <a class="btn btn-secondary" th:href="@{/customer}" role="button">Hủy</a>
                             </td>
                         </tr>
                     </table>
@@ -106,6 +86,5 @@
     </div>
 </div>
 <footer th:replace="~{layout::footer}"></footer>
-
 </body>
 </html>

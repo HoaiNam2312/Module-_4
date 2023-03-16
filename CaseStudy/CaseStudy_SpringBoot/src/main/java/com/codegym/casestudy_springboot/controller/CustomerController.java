@@ -20,9 +20,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Controller
 @RequestMapping("/customer")
 public class CustomerController {
@@ -65,7 +62,7 @@ public class CustomerController {
         return "/customer/create";
     }
 
-    @PostMapping("/save")
+    @PostMapping("/create")
     private String saveCustomerNew(@Validated CustomerDto customerDto, BindingResult bindingResult, RedirectAttributes redirectAttributes,Model model) {
         new CustomerDto().validate(customerDto,bindingResult);
         if (bindingResult.hasErrors()) {
@@ -86,10 +83,27 @@ public class CustomerController {
         return "redirect:/customer";
     }
 
-
+    @GetMapping("/edit")
+    public String showFormEdit(@RequestParam int id, Model model) {
+        CustomerDto customerDto = new CustomerDto();
+        Customer customer = customerService.findById(id);
+        BeanUtils.copyProperties(customer,customerDto);
+        model.addAttribute("customerDto", customerDto);
+        model.addAttribute("customerTypeList", customerTypeService.findAll());
+        return "/customer/edit";
+    }
 
     @PostMapping("/edit")
-    public String editCustomer(Customer customerEdit, RedirectAttributes redirectAttributes) {
+    public String saveCustomerEdit(@Validated CustomerDto customerDto, BindingResult bindingResult, RedirectAttributes redirectAttributes,Model model) {
+        new CustomerDto().validate(customerDto, bindingResult);
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("customerTypeList", customerTypeService.findAll());
+            return "/customer/edit";
+        }
+        Customer customer = new Customer();
+        BeanUtils.copyProperties(customerDto, customer);
+        customerService.save(customer);
+        redirectAttributes.addFlashAttribute("success", "Chỉnh sửa thành công");
         return "redirect:/customer";
     }
 }

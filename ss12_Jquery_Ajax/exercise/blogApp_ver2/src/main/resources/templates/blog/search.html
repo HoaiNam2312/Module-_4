@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table id="blogList" class="table table-primary table-bordered"
+       style="background-color: white ;width:100%; font-size: medium">
+    <thead>
+    <tr>
+        <th>Tiêu đề</th>
+        <th>Thể loại</th>
+        <th>Thời gian xuất bản</th>
+        <th>
+            <div class="d-flex justify-content-center">
+                Chỉnh sửa</div>
+        </th>
+        <th>
+            <div class="d-flex justify-content-center">
+                Xóa</div>
+        </th>
+        <th>
+            <div class="d-flex justify-content-center">
+                Đọc bài viết</div>
+        </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="row,rowStat : ${blogList}">
+        <td th:text="${row.name}"></td>
+        <td th:text="${row.category.name}"></td>
+        <td th:text="${row.postTime}"></td>
+        <td>
+            <div class="d-flex justify-content-center">
+                <div>
+                    <a class="btn btn-danger" role="button" th:href="@{/blog/edit(id=${row.getId()})}">Chỉnh
+                        sửa</a>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="d-flex justify-content-center">
+                <div>
+                    <a class="btn btn-danger" role="button"
+                       th:href="@{/blog/delete(id=${row.getId()})}">Xóa</a>
+                </div>
+            </div>
+        </td>
+        <td>
+            <div class="d-flex justify-content-center">
+                <div>
+                    <a class="btn btn-danger" role="button" th:href="@{/blog/view(id=${row.getId()})}"
+                       target="_blank">Đọc</a>
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

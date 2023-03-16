@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+</head>
+<body>
+<!--<h1 id="p1" style="left: 200px;width: 200px;background-color: pink;position: absolute">HelloWorld</h1>-->
+<!--<button id="btn1" >Click1</button>-->
+<!--<button id="btn2">Click1</button>-->
+    <form>
+        <input type="text" id="name" placeholder="name">
+        <input type="text" id="gender" placeholder="gender">
+        <select id="classId">
+            <option value="1">A06</option>
+            <option value="2">A07</option>
+        </select>
+        <button id="btn-save" type="button" onclick="add()">Save</button>
+    </form>
+<h1>Danh sách sinh viên</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Class</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    </tbody>
+
+</table >
+<h1>Cuối trang</h1>
+<script>
+    // $(document).ready(function (){
+    //     $("#btn1").click(function () {
+    //         $("#p1").html('Hello');
+    //     })
+    // });
+    //
+    // $("#btn1").click(function () {
+    //      // $("#p1").hide();
+    //      // $("#p1").fadeOut(3000);
+    //      $("#p1").toggle(500);
+    //      // $("#p1").animate(
+    //      //     {
+    //      //         left: '1000px',
+    //      //         opacity: '0.5',
+    //      //         height: '150px',
+    //      //         width: '150px',
+    //      //         background_color:'red'
+    //      //     });
+    // });
+    // $("#btn2").click(function () {
+    //      $("#p1").stop();
+    // });
+   // LẤY VỀ LIST
+    setTimeout(display,3000);
+
+    function display(){
+        $.ajax({
+            contentType: 'application/json',
+            type: "GET",
+            dataType:"json",
+            //tên API
+            url: "http://localhost:8080/api/student",
+            success: function (data) {
+                let content ="";
+                for(let i=0; i<data.length;i++){
+                    content +='  <tr>\n' +
+                        '<td>'+(i+1)+'</td>\n' +
+                        '<td>'+data[i].id+'</td>\n' +
+                        '<td>'+data[i].name+'</td>\n' +
+                        '<td>'+data[i].gender+'</td>\n' +
+                        '<td>'+data[i].classRoom.name+'</td>\n' +
+                        '</tr>'
+                }
+                $("tbody").html(content);
+            }
+        });
+    }
+    function add() {
+     let name = $("#name").val();
+     let gender = $("#gender").val();
+     let classId = $("#classId").val();
+     let student ={
+         name:name,
+         gender: gender,
+         classRoom:{
+             id:classId
+         }
+     }
+        $.ajax({
+            contentType: 'application/json;',
+            dataType: 'json',
+            type: 'POST',
+            url: 'http://localhost:8080/smartphone',
+            data: JSON.stringify(student),
+            success: function () {
+            },
+            complete: function () {
+                display();
+            }
+        });
+    }
+
+
+</script>
+</body>
+</html>

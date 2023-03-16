@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout::head}">
+</head>
+<body>
+<div th:replace="~{layout::menu}"></div>
+
+<div class="container bg-transparent mt-5">
+    <div class="row mt-1">
+        <div class="col-12">
+            <h1 style="text-align: center; color: deeppink">Thêm mới bài viết</h1>
+        </div>
+    </div>
+    <div class="row mt-5" style="padding-left: 20px">
+        <div class="col-6">
+            <div class="row bg-transparent">
+                <form th:action="@{/blog/save}" th:object="${blog}" method="post">
+                    <table class="table table-borderless">
+                        <tr hidden>
+                            <td colspan="5"><label for="id">Id: </label></td>
+                            <td colspan="3"><input type="hidden" id="id" th:field="*{id}"></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label for="name">Tiêu đề: </label></td>
+                            <td colspan="3"><input type="text" id="name" th:field="*{name}" placeholder="Nhập tiêu đề bài viết"
+                                       required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label for="author">Tên tác giả: </label></td>
+                            <td colspan="3"><input id="author" th:field="*{author}" placeholder="Nhập tên tác giả" required></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label>Thể loại: </label></td>
+                            <td colspan="3">
+                                <label>
+                                    <select th:field="*{category}" class="form-select" aria-label="Default select example">
+                                        <option th:value="0" selected>Chọn thể loại</option>
+                                        <option th:each="temp : ${categories}" th:value="${temp.id}"
+                                                th:text="${temp.name}"></option>
+                                    </select>
+                                </label>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label for="pn">Ngày xuất bản: </label></td>
+                            <td colspan="3"><input type="date" id="pn" th:field="*{postTime}"></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label for="content">Nội dung: </label></td>
+                            <td colspan="3">
+                                <textarea rows="6" cols="50" th:field="*{content}" id="content">
+                                </textarea>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td colspan="5"></td>
+                            <td colspan="3">
+                                <button class="btn btn-secondary" type="submit">Tạo mới</button>
+                                <a class="btn btn-secondary" th:href="@{/blog}" role="button">Hủy</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{layout::footer}"></footer>
+</body>
+</html>

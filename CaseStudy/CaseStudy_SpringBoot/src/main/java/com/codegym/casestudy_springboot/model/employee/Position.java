@@ -17,9 +17,10 @@ public class Position {
 
     }
 
-    public Position(int id, String name) {
+    public Position(int id, String name, Set<Employee> employeeSet) {
         this.id = id;
         this.name = name;
+        this.employeeSet = employeeSet;
     }
 
     public int getId() {
@@ -36,5 +37,13 @@ public class Position {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Employee> getEmployeeSet() {
+        return employeeSet;
+    }
+
+    public void setEmployeeSet(Set<Employee> employeeSet) {
+        this.employeeSet = employeeSet;
     }
 }
