@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout::head}">
+</head>
+<body>
+<div th:replace="~{layout::menu}"></div>
+
+<div class="container bg-transparent mt-5">
+    <div class="row mt-1">
+        <div class="col-12">
+            <h1 style="text-align: center; color: deeppink">Thêm mới nhân viên</h1>
+        </div>
+    </div>
+    <div class="row mt-5" style="padding-left: 20px">
+        <div class="col-6">
+            <div class="row bg-transparent">
+                <form th:action="@{/employee/edit}" th:object="${employeeDto}" method="post">
+                    <table class="table table-borderless">
+                        <tr>
+                            <td colspan="5"><label for="name">Tên: </label></td>
+                            <td colspan="3"><input type="text" id="name" th:field="*{name}"
+                                                   placeholder="Nhập tiêu đề bài viết">
+                                <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label for="birthday">Ngày sinh: </label></td>
+                            <td colspan="3"><input id="birthday" th:field="*{birthday}" type="text">
+                                <p style="color: red" th:if="${#fields.hasErrors('birthday')}"
+                                   th:errors="*{birthday}"></p></td>
+                        </tr>
+
+
+                        <tr>
+                            <td colspan="5"><label for="pn">Số CMND: </label></td>
+                            <td colspan="3"><input type="text" id="pn" th:field="*{idCard}">
+                                <p style="color: red" th:if="${#fields.hasErrors('idCard')}" th:errors="*{idCard}"></p>
+                            </td>
+                        </tr>
+
+
+                        <tr>
+                            <td colspan="5"><label for="salary">Lương: </label></td>
+                            <td colspan="3"><input type="text" id="salary" th:field="*{salary}">
+                                <p style="color: red" th:if="${#fields.hasErrors('idCard')}" th:errors="*{salary}"></p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label for="phone">Số điện thoại: </label></td>
+                            <td colspan="3"><input type="text" id="phone" th:field="*{phone}">
+                                <p style="color: red" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}"></p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label for="email">Email: </label></td>
+                            <td colspan="3"><input type="text" id="email" th:field="*{email}">
+                                <p style="color: red" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label for="address">Địa chỉ: </label></td>
+                            <td colspan="3"><input type="text" id="address" th:field="*{address}">
+                                <p style="color: red" th:if="${#fields.hasErrors('address')}"
+                                   th:errors="*{address}"></p></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label>Chức vụ: </label></td>
+                            <td colspan="3">
+                                <label>
+                                    <select th:field="*{division}" class="form-select"
+                                            aria-label="Default select example">
+                                        <option th:value="${0}" selected>Chọn chức vụ của nhân viên</option>
+                                        <option th:each="temp : ${divisionList}" th:value="${temp.id}"
+                                                th:text="${temp.name}"></option>
+                                    </select>
+                                </label>
+                                <p style="color: red" th:if="${#fields.hasErrors('division')}"
+                                   th:errors="*{division}"></p></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label>Vị trí: </label></td>
+                            <td colspan="3">
+                                <label>
+                                    <select th:field="*{position}" class="form-select"
+                                            aria-label="Default select example">
+                                        <option th:value="${0}" selected>Chọn vị trí của nhân viên</option>
+                                        <option th:each="temp : ${positionList}" th:value="${temp.id}"
+                                                th:text="${temp.name}"></option>
+                                    </select>
+                                </label>
+                                <p style="color: red" th:if="${#fields.hasErrors('position')}"
+                                   th:errors="*{position}"></p></td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"><label>Trình độ: </label></td>
+                            <td colspan="3">
+                                <label>
+                                    <select th:field="*{educationDegree}" class="form-select"
+                                            aria-label="Default select example">
+                                        <option th:value="${0}" selected>Chọn trình độ của nhân viên</option>
+                                        <option th:each="temp : ${educationDegreeList}" th:value="${temp.id}"
+                                                th:text="${temp.name}"></option>
+                                    </select>
+                                </label>
+                                <p style="color: red" th:if="${#fields.hasErrors('educationDegree')}"
+                                   th:errors="*{educationDegree}"></p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td colspan="5"></td>
+                            <td colspan="3">
+                                <button class="btn btn-secondary" type="submit">Chỉnh sửa</button>
+                                <a class="btn btn-secondary" th:href="@{/employee}" role="button">Hủy</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{layout::footer}"></footer>
+</body>
+</html>

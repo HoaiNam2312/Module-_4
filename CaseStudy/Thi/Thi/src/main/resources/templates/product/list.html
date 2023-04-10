@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout::head}">
+
+</head>
+<body>
+
+<div th:replace="~{layout::menu}"></div>
+<div class="container bg-transparent mt-5">
+
+
+    <div class="row">
+        <div class="col-4 mt-3">
+            <a class="btn btn-secondary" th:href="@{/product/create}" role="button">Thêm mới sản phẩm</a>
+
+        </div>
+        <div class="col-4 mb-3 d-flex justify-content-center">
+            <h1 style="color: crimson" th:if="${success != null}" th:text="${success}"></h1>
+        </div>
+
+    </div>
+
+
+    <!--        Tìm kiếm-->
+    <div class="row">
+        <div class="col-3 mt-3"></div>
+        <div class="col-6 mt-3">
+            <form th:action="@{/product}" th:method="get">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Nhập tên sản phẩm"
+                           aria-label="Recipient's username"
+                           aria-describedby="button-addon2" name="name">
+                    <input type="text" class="form-control" placeholder="Nhập giá bắt đầu"
+                           aria-label="Recipient's username"
+                           aria-describedby="button-addon2" name="price">
+                    <select th:if="${productTypeId.equals('')}" name="productTypeId" class="form-select"
+                            aria-label="Default select example">
+                        <option th:value="''" selected>Loại sản phẩm</option>
+                        <option th:each="temp : ${productTypeList}" th:value="${temp.id}"
+                                th:text="${temp.name}"></option>
+                    </select>
+                    <select th:if="${!productTypeId.equals('')}" name="productTypeId" class="form-select"
+                            aria-label="Default select example">
+                        <option th:each="temp : ${productTypeList}" th:if="${productTypeId.equals(temp.id+'')}"
+                                th:value="${temp.id}" th:text="${temp.name}"></option>
+                        <option th:each="temp : ${productTypeList}" th:if="${!productTypeId.equals(temp.id+'')}"
+                                th:value="${temp.id}" th:text="${temp.name}"></option>
+                        <option th:value="''">Tất cả</option>
+                    </select>
+                    <!--                    <select th:if="${positionId.equals('')}" name="positionId" class="form-select"-->
+                    <!--                            aria-label="Default select example">-->
+                    <!--                        <option th:value="''" selected>Vị trí(Tất cả)</option>-->
+                    <!--                        <option th:each="temp : ${positionList}" th:value="${temp.id}"-->
+                    <!--                                th:text="${temp.name}"></option>-->
+                    <!--                    </select>-->
+                    <!--                    <select th:if="${!positionId.equals('')}" name="positionId" class="form-select"-->
+                    <!--                            aria-label="Default select example">-->
+                    <!--                        <option th:each="temp : ${positionList}" th:if="${positionId.equals(temp.id+'')}"-->
+                    <!--                                th:value="${temp.id}" th:text="${temp.name}"></option>-->
+                    <!--                        <option th:each="temp : ${positionList}" th:if="${!positionId.equals(temp.id+'')}"-->
+                    <!--                                th:value="${temp.id}" th:text="${temp.name}"></option>-->
+                    <!--                        <option th:value="''">Tất cả</option>-->
+                    <!--                    </select>-->
+                    <!--                    <select th:if="${educationDegreeId.equals('')}" name="educationDegreeId" class="form-select"-->
+                    <!--                            aria-label="Default select example">-->
+                    <!--                        <option th:value="''" selected>Trình độ(Tất cả)</option>-->
+                    <!--                        <option th:each="temp : ${educationDegreeList}" th:value="${temp.id}"-->
+                    <!--                                th:text="${temp.name}"></option>-->
+                    <!--                    </select>-->
+                    <!--                    <select th:if="${!educationDegreeId.equals('')}" name="educationDegreeId" class="form-select"-->
+                    <!--                            aria-label="Default select example">-->
+                    <!--                        <option th:each="temp : ${educationDegreeList}" th:if="${educationDegreeId.equals(temp.id+'')}"-->
+                    <!--                                th:value="${temp.id}" th:text="${temp.name}"></option>-->
+                    <!--                        <option th:each="temp : ${educationDegreeList}" th:if="${!educationDegreeId.equals(temp.id+'')}"-->
+                    <!--                                th:value="${temp.id}" th:text="${temp.name}"></option>-->
+                    <!--                        <option th:value="''">Tất cả</option>-->
+                    <!--                    </select>-->
+<!--                    <button class="btn btn-outline-secondary" type="reset" id="a">Xóa tìm kiếm</button>-->
+                    <a class="btn btn-outline-secondary" th:href="@{/product}" role="button">Xóa tìm kiếm</a>
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Tìm kiếm</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-3 mt-3"></div>
+    </div>
+
+
+    <!--       Bảng danh sách-->
+    <div class="row mt-5">
+        <div class="col-lg-12">
+            <table id="tableStudent" class="table table-primary table-bordered table-hover table-responsive">
+                <thead>
+                <tr>
+                    <th>
+                        <div class="d-flex justify-content-center">STT</div>
+                    </th>
+                    <th>
+                        <div class="d-flex justify-content-center">Chọn</div>
+                    </th>
+                    <th>Tên sản phẩm</th>
+                    <th>Giá bắt đầu</th>
+                    <th>Loại sản phẩm</th>
+                    <th>Tình trạng</th>
+                    <th>
+                        <div class="d-flex justify-content-center">
+                            Hành động
+                        </div>
+                    </th>
+
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row,rowStat : ${pages}">
+                    <td>
+                        <div class="d-flex justify-content-center" th:text="${rowStat.count}"></div>
+                    </td>
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <input name="idDelete" class="form-check-input" type="checkbox" th:value="${row.id}">
+                        </div>
+                    </td>
+                    <td th:text="${row.name}"></td>
+                    <td th:text="${row.price}"></td>
+                    <td th:text="${row.productType.name}"></td>
+                    <td th:text="${row.status}"></td>
+
+                    <!--Edit-->
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-danger" role="button" th:href="@{/product/edit(id=${row.getId()})}">
+                                Sửa</a>
+                        </div>
+                    </td>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-3 mt-3">
+            <div>
+                <button id="buttonDeletes" type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#deletesModal">Xóa
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!--    Phân trang-->
+    <div class="row mt-5">
+        <div class="col-3 mt-3"></div>
+        <div class="col-2 mt-3 d-flex justify-content-end">
+            <div>
+                <a class="btn btn-secondary" role="button"
+                   th:href="@{/product(page=${pages.number - 1},name=${name},price=${price},productTypeId=${productTypeId})}"
+                   th:if="${pages.hasPrevious()}">Trang sau</a>
+            </div>
+        </div>
+        <div class="col-2 mt-3 d-flex justify-content-center">
+            <div>
+                <span th:text="${pages.number+1}"></span>/<span th:text="${pages.totalPages}"></span>
+            </div>
+        </div>
+        <div class="col-2 mt-3">
+            <a class="btn btn-secondary" role="button"
+               th:href="@{/product(page=${pages.number + 1},name=${name},price=${price},productTypeId=${productTypeId})}"
+               th:if="${pages.hasNext()}">Trang tiếp theo</a>
+        </div>
+        <div class="col-3 mt-3"></div>
+    </div>
+
+</div>
+
+
+<!--    Xoá nhiều Record-->
+<!--    Modal deletes-->
+<div class="modal fade" id="deletesModal" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel1">Xoá Blog</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                Bạn có muốn xoá các sản phẩm đã chọn không ?
+            </div>
+            <form action="/product/deletes" method="get">
+                <div class="modal-footer">
+                    <input hidden type="text" id="idChecked" name="idChecked">
+                    <button type="submit" class="btn btn-danger">Xoá</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Không
+                    </button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<footer th:replace="~{layout::footer}"></footer>
+<script>
+    document.getElementById("buttonDeletes").onclick = function () {
+        let idDeleteList = document.getElementsByName('idDelete');
+        let arr = [];
+        for (let key in idDeleteList) {
+            if (idDeleteList[key].checked === true) {
+                arr.push(idDeleteList[key].value);
+            }
+        }
+        document.getElementById('idChecked').value = arr.toString();
+    }
+
+</script>
+</body>
+</html>

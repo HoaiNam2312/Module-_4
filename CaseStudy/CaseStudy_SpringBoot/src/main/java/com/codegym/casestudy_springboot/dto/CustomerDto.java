@@ -13,7 +13,7 @@ public class CustomerDto implements Validator {
     private int id;
 
     @NotBlank(message = "Vui lòng không để trống!")
-    @Pattern(regexp = "^([ÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚƯỪỬỤỮỨỰVWXYỲỶỸÝỴZ]" +
+    @Pattern(regexp = "^([AÀẢÃÁẠĂẰẲẴẮẶÂẦẨẪẤẬBCDĐEÈẺẼÉẸÊỀỂỄẾỆFGHIÌỈĨÍỊJKLMNOÒỎÕÓỌÔỒỔỖỐỘƠỜỞỠỚỢPQRSTUÙỦŨÚƯỪỬỤỮỨỰVWXYỲỶỸÝỴZ]" +
             "[aàảãáạăằẳẵắặâầẩẫấậbcdđeèẻẽéẹêềểễếệfghiìỉĩíịjklmnoòỏõóọôồổỗốộơờởỡớợpqrstuùủũúụưừửữứựvwxyỳỷỹýỵz]+|\\s)+$",
             message = "Vui lòng nhập tên của bạn theo mẫu như sau: 'Nguyễn Văn A")
     private String name;
@@ -31,7 +31,6 @@ public class CustomerDto implements Validator {
     @NotBlank(message = "Vui lòng không để trống!")
     @Pattern(regexp = "^(0|\\+84)(\\s|\\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\\d)(\\s|\\.)?(\\d{3})(\\s|\\.)?(\\d{3})$", message = "Số điện thoại chưa đúng vui lòng nhập lại!")
     private String phone;
-
 
     @NotBlank(message = "Vui lòng không để trống!")
     @Email(message = "Email chưa đúng định dạng vui lòng nhập lại!")

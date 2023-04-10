@@ -1,9 +1,8 @@
 package com.codegym.casestudy_springboot.model.employee;
 
-import com.codegym.casestudy_springboot.model.user.User;
+import com.codegym.casestudy_springboot.model.user.AppUser;
 
 import javax.persistence.*;
-import java.util.Date;
 
 @Entity
 public class Employee {
@@ -14,7 +13,7 @@ public class Employee {
     private String name;
 
     @Column(columnDefinition = "date")
-    private Date birthday;
+    private String birthday;
     private String idCard;
     private double salary;
     private String phone;
@@ -33,15 +32,12 @@ public class Employee {
     @JoinColumn(name = "educationDegree_id", referencedColumnName = "id")
     private EducationDegree educationDegree;
 
-    @ManyToOne
-    @JoinColumn(name = "username", referencedColumnName = "username")
-    private User user;
 
     public Employee() {
 
     }
 
-    public Employee(int id, String name, Date birthday, String idCard, double salary, String phone, String email, String address) {
+    public Employee(int id, String name, String birthday, String idCard, double salary, String phone, String email, String address, Division division, Position position, EducationDegree educationDegree) {
         this.id = id;
         this.name = name;
         this.birthday = birthday;
@@ -50,6 +46,9 @@ public class Employee {
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.division = division;
+        this.position = position;
+        this.educationDegree = educationDegree;
     }
 
     public int getId() {
@@ -68,11 +67,11 @@ public class Employee {
         this.name = name;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 
@@ -114,5 +113,29 @@ public class Employee {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public Division getDivision() {
+        return division;
+    }
+
+    public void setDivision(Division division) {
+        this.division = division;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public void setPosition(Position position) {
+        this.position = position;
+    }
+
+    public EducationDegree getEducationDegree() {
+        return educationDegree;
+    }
+
+    public void setEducationDegree(EducationDegree educationDegree) {
+        this.educationDegree = educationDegree;
     }
 }

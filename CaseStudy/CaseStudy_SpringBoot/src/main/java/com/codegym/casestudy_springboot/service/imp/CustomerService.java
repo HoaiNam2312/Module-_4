@@ -75,4 +75,9 @@ public class CustomerService implements ICustomerService {
     public Page<Customer> paginationByNameAndIdCardAndCustomerType_Id(String name, String idCard, Integer id, Pageable pageable) {
         return iCustomerRepository.findByNameContainingAndIdCardContainingAndCustomerType_Id(name, idCard, id, pageable);
     }
+
+    @Override
+    public Page<Customer> search(String name, String idCard, String customerTypeId, Pageable pageable) {
+        return iCustomerRepository.search(name,idCard,customerTypeId,pageable);
+    }
 }

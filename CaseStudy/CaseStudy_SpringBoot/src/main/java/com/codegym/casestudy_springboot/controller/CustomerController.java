@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,23 +34,15 @@ public class CustomerController {
     @GetMapping()
     public String showList(@RequestParam(required = false, defaultValue = "") String name,
                            @RequestParam(required = false, defaultValue = "") String idCard,
-                           @RequestParam(required = false, defaultValue = "0") int customerTypeId,
+                           @RequestParam(required = false, defaultValue = "") String customerTypeId,
                            @RequestParam(defaultValue = "0") int page, Model model) {
         Pageable pageable = PageRequest.of(page, 4, Sort.by("birthday").ascending());
 
-        Page<Customer> pages = null;
-
-        if (customerTypeId == 0) {
-            pages = customerService.paginationByNameAndIdCard(name, idCard, pageable);
-        } else {
-            pages = customerService.paginationByNameAndIdCardAndCustomerType_Id(name, idCard, customerTypeId, pageable);
-        }
-
+        model.addAttribute("pages", customerService.search("%" + name + "%", "%" + idCard + "%", "%" + customerTypeId + "%", pageable));
         model.addAttribute("seachName", name);
         model.addAttribute("seachIdCard", idCard);
         model.addAttribute("seachCustomerTypeId", customerTypeId);
         model.addAttribute("customerEdit", new Customer());
-        model.addAttribute("pages", pages);
         model.addAttribute("customer", new Customer());
         model.addAttribute("customerTypeList", customerTypeService.findAll());
         return "/customer/list";

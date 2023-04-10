@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout::head}">
+
+</head>
+<body>
+
+<div th:replace="~{layout::menu}"></div>
+<div class="container bg-transparent mt-5">
+
+
+    <div class="row">
+        <div class="col-4 mt-3">
+            <a class="btn btn-secondary" th:href="@{/employee/create}" role="button">Thêm mới nhân viên</a>
+
+        </div>
+        <div class="col-4 mb-3 d-flex justify-content-center">
+            <h1 style="color: crimson" th:if="${success != null}" th:text="${success}"></h1>
+        </div>
+
+    </div>
+
+
+    <!--        Tìm kiếm-->
+    <div class="row">
+        <div class="col-3 mt-3"></div>
+        <div class="col-6 mt-3">
+            <form th:action="@{/employee}" th:method="get">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Nhập số CMND"
+                           aria-label="Recipient's username"
+                           aria-describedby="button-addon2" name="idCard">
+                    <select th:if="${divisionID.equals('')}" name="divisionId" class="form-select"
+                            aria-label="Default select example">
+                        <option th:value="''" selected>Chức vụ(Tất cả)</option>
+                        <option th:each="temp : ${divisionList}" th:value="${temp.id}"
+                                th:text="${temp.name}"></option>
+                    </select>
+                    <select th:if="${!divisionID.equals('')}" name="divisionId" class="form-select"
+                            aria-label="Default select example">
+                        <option th:each="temp : ${divisionList}" th:if="${divisionID.equals(temp.id+'')}"
+                                th:value="${temp.id}" th:text="${temp.name}"></option>
+                        <option th:each="temp : ${divisionList}" th:if="${!divisionID.equals(temp.id+'')}"
+                                th:value="${temp.id}" th:text="${temp.name}"></option>
+                        <option th:value="''">Tất cả</option>
+                    </select>
+                    <select th:if="${positionId.equals('')}" name="positionId" class="form-select"
+                            aria-label="Default select example">
+                        <option th:value="''" selected>Vị trí(Tất cả)</option>
+                        <option th:each="temp : ${positionList}" th:value="${temp.id}"
+                                th:text="${temp.name}"></option>
+                    </select>
+                    <select th:if="${!positionId.equals('')}" name="positionId" class="form-select"
+                            aria-label="Default select example">
+                        <option th:each="temp : ${positionList}" th:if="${positionId.equals(temp.id+'')}"
+                                th:value="${temp.id}" th:text="${temp.name}"></option>
+                        <option th:each="temp : ${positionList}" th:if="${!positionId.equals(temp.id+'')}"
+                                th:value="${temp.id}" th:text="${temp.name}"></option>
+                        <option th:value="''">Tất cả</option>
+                    </select>
+                    <select th:if="${educationDegreeId.equals('')}" name="educationDegreeId" class="form-select"
+                            aria-label="Default select example">
+                        <option th:value="''" selected>Trình độ(Tất cả)</option>
+                        <option th:each="temp : ${educationDegreeList}" th:value="${temp.id}"
+                                th:text="${temp.name}"></option>
+                    </select>
+                    <select th:if="${!educationDegreeId.equals('')}" name="educationDegreeId" class="form-select"
+                            aria-label="Default select example">
+                        <option th:each="temp : ${educationDegreeList}" th:if="${educationDegreeId.equals(temp.id+'')}"
+                                th:value="${temp.id}" th:text="${temp.name}"></option>
+                        <option th:each="temp : ${educationDegreeList}" th:if="${!educationDegreeId.equals(temp.id+'')}"
+                                th:value="${temp.id}" th:text="${temp.name}"></option>
+                        <option th:value="''">Tất cả</option>
+                    </select>
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Tìm kiếm</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-3 mt-3"></div>
+    </div>
+
+
+    <!--       Bảng danh sách-->
+    <div class="row mt-5">
+        <div class="col-lg-12">
+            <table id="tableStudent" class="table table-primary table-bordered table-hover table-responsive">
+                <thead>
+                <tr>
+                    <th rowspan="2" colspan="2">Họ và tên</th>
+                    <th rowspan="2" colspan="2">Ngày sinh</th>
+                    <th rowspan="2" colspan="2">Số CMND</th>
+                    <th rowspan="2" colspan="2">Mức lương</th>
+                    <th rowspan="2" colspan="2">Chức vụ</th>
+                    <th rowspan="2" colspan="2">Vị trí</th>
+                    <th rowspan="2" colspan="2">Trình độ</th>
+                    <th rowspan="2" colspan="2">SĐT</th>
+                    <th rowspan="2" colspan="2">Email</th>
+                    <th rowspan="2" colspan="2">Địa chỉ</th>
+                    <th rowspan="2" colspan="2">
+                        <div class="d-flex justify-content-center">
+                            Chỉnh sửa
+                        </div>
+                    </th>
+                    <th colspan="2">
+                        <div class="d-flex justify-content-center">
+                            Xóa
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row,rowStat : ${pages}">
+                    <td colspan="2" th:text="${row.name}"></td>
+                    <td colspan="2" th:text="${row.birthday}"></td>
+                    <td colspan="2" th:text="${row.idCard}"></td>
+                    <td colspan="2" th:text="${row.salary}"></td>
+                    <td colspan="2" th:text="${row.division.name}"></td>
+                    <td colspan="2" th:text="${row.position.name}"></td>
+                    <td colspan="2" th:text="${row.educationDegree.name}"></td>
+                    <td colspan="2" th:text="${row.phone}"></td>
+                    <td colspan="2" th:text="${row.email}"></td>
+                    <td colspan="2" th:text="${row.address}"></td>
+
+                    <!--                    Edit-->
+                    <td colspan="2">
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-danger" role="button" th:href="@{/employee/edit(id=${row.getId()})}">Chỉnh
+                                sửa</a>
+                        </div>
+
+                    </td>
+
+                    <!--Xóa-->
+                    <td colspan="2">
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    th:attr="data-bs-target='#exampleModal'+${row.id}">Xóa
+                            </button>
+                            <div class="modal fade" th:id="'exampleModal'+${row.id}" tabindex="-1"
+                                 aria-labelledby="exampleModalLabel"
+                                 aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Thông báo:</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                        </div>
+                                        <form th:action="@{employee/delete(id=${row.id})}" method="post">
+                                            <div class="modal-body">
+                                                <p>Bạn có muốn xóa: <span th:text="${row.name}"></span></p>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                                    Hủy
+                                                </button>
+                                                <button type="submit" class="btn btn-primary">Xóa</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+<!--    Phân trang-->
+    <div class="row">
+        <div class="col-3 mt-3"></div>
+        <div class="col-2 mt-3 d-flex justify-content-end">
+            <div>
+                <a class="btn btn-secondary" role="button"
+                   th:href="@{/employee(page=${pages.number - 1},idCard=${idCard},divisionId=${divisionID},
+                   positionId=${positionId},educationDegreeID=${educationDegreeId})}"
+                   th:if="${pages.hasPrevious()}">Trang sau</a>
+            </div>
+        </div>
+        <div class="col-2 mt-3 d-flex justify-content-center">
+            <div>
+                <span th:text="${pages.number+1}"></span>/<span th:text="${pages.totalPages}"></span>
+            </div>
+        </div>
+        <div class="col-2 mt-3">
+            <a class="btn btn-secondary" role="button"
+               th:href="@{/employee(page=${pages.number + 1},idCard=${idCard},divisionId=${divisionID},
+                   positionId=${positionId},educationDegreeID=${educationDegreeId})}"
+               th:if="${pages.hasNext()}">Trang tiếp theo</a>
+        </div>
+        <div class="col-3 mt-3"></div>
+    </div>
+</div>
+
+<footer th:replace="~{layout::footer}"></footer>
+</body>
+</html>

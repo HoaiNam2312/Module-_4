@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layout::head}">
+
+</head>
+<body>
+
+<div th:replace="~{layout::menu}"></div>
+<div class="container bg-transparent mt-5">
+
+
+    <div class="row">
+        <div class="col-4 mt-3">
+            <a class="btn btn-secondary" th:href="@{/motel/create}" role="button">Thêm mới nhân viên</a>
+
+        </div>
+        <div class="col-4 mb-3 d-flex justify-content-center">
+            <h1 style="color: crimson" th:if="${success != null}" th:text="${success}"></h1>
+        </div>
+
+    </div>
+
+
+    <!--        Tìm kiếm-->
+    <div class="row">
+        <div class="col-3 mt-3"></div>
+        <div class="col-6 mt-3">
+            <form th:action="@{/motel}" th:method="get">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" placeholder="Nhập tên chủ phòng"
+                           aria-label="Recipient's username"
+                           aria-describedby="button-addon2" name="name">
+                    <select th:if="${paymentId.equals('')}" name="paymentId" class="form-select"
+                            aria-label="Default select example">
+                        <option th:value="''" selected>Hình thức thuê(Tất cả)</option>
+                        <option th:each="temp : ${paymentList}" th:value="${temp.id}"
+                                th:text="${temp.name}"></option>
+                    </select>
+                    <select th:if="${!paymentId.equals('')}" name="paymentId" class="form-select"
+                            aria-label="Default select example">
+                        <option th:each="temp : ${paymentList}" th:if="${paymentId.equals(temp.id+'')}"
+                                th:value="${temp.id}" th:text="${temp.name}"></option>
+                        <option th:each="temp : ${paymentList}" th:if="${!paymentId.equals(temp.id+'')}"
+                                th:value="${temp.id}" th:text="${temp.name}"></option>
+                        <option th:value="''">Tất cả</option>
+                    </select>
+                    <!--                    <select th:if="${positionId.equals('')}" name="positionId" class="form-select"-->
+                    <!--                            aria-label="Default select example">-->
+                    <!--                        <option th:value="''" selected>Vị trí(Tất cả)</option>-->
+                    <!--                        <option th:each="temp : ${positionList}" th:value="${temp.id}"-->
+                    <!--                                th:text="${temp.name}"></option>-->
+                    <!--                    </select>-->
+                    <!--                    <select th:if="${!positionId.equals('')}" name="positionId" class="form-select"-->
+                    <!--                            aria-label="Default select example">-->
+                    <!--                        <option th:each="temp : ${positionList}" th:if="${positionId.equals(temp.id+'')}"-->
+                    <!--                                th:value="${temp.id}" th:text="${temp.name}"></option>-->
+                    <!--                        <option th:each="temp : ${positionList}" th:if="${!positionId.equals(temp.id+'')}"-->
+                    <!--                                th:value="${temp.id}" th:text="${temp.name}"></option>-->
+                    <!--                        <option th:value="''">Tất cả</option>-->
+                    <!--                    </select>-->
+                    <!--                    <select th:if="${educationDegreeId.equals('')}" name="educationDegreeId" class="form-select"-->
+                    <!--                            aria-label="Default select example">-->
+                    <!--                        <option th:value="''" selected>Trình độ(Tất cả)</option>-->
+                    <!--                        <option th:each="temp : ${educationDegreeList}" th:value="${temp.id}"-->
+                    <!--                                th:text="${temp.name}"></option>-->
+                    <!--                    </select>-->
+                    <!--                    <select th:if="${!educationDegreeId.equals('')}" name="educationDegreeId" class="form-select"-->
+                    <!--                            aria-label="Default select example">-->
+                    <!--                        <option th:each="temp : ${educationDegreeList}" th:if="${educationDegreeId.equals(temp.id+'')}"-->
+                    <!--                                th:value="${temp.id}" th:text="${temp.name}"></option>-->
+                    <!--                        <option th:each="temp : ${educationDegreeList}" th:if="${!educationDegreeId.equals(temp.id+'')}"-->
+                    <!--                                th:value="${temp.id}" th:text="${temp.name}"></option>-->
+                    <!--                        <option th:value="''">Tất cả</option>-->
+                    <!--                    </select>-->
+                    <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Tìm kiếm</button>
+                </div>
+            </form>
+        </div>
+        <div class="col-3 mt-3"></div>
+    </div>
+
+
+    <!--       Bảng danh sách-->
+    <div class="row mt-5">
+        <div class="col-lg-12">
+            <table id="tableStudent" class="table table-primary table-bordered table-hover table-responsive">
+                <thead>
+                <tr>
+                    <th>STT</th>
+                    <th>Tên người thuê</th>
+                    <th>SĐT</th>
+                    <th>Ngày bắt đầu</th>
+                    <th>Hình thức thuê</th>
+                    <th>Ghi chú</th>
+                    <th colspan="3">
+                        <div class="d-flex justify-content-center">
+                            Thao tác
+                        </div>
+                    </th>
+
+                    <th>
+                        <div class="d-flex justify-content-center">
+                            <button id="buttonDeletes" type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#deletesModal">Xóa tất cả
+                            </button>
+                        </div>
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="row,rowStat : ${pages}">
+                    <td th:text="${rowStat.count}"></td>
+                    <td th:text="${row.name}"></td>
+                    <td th:text="${row.phone}"></td>
+                    <td th:text="${row.startDay}"></td>
+                    <td th:text="${row.payment.name}"></td>
+                    <td th:text="${row.note}"></td>
+
+                    <!--Edit-->
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <a class="btn btn-danger" role="button" th:href="@{/motel/edit(id=${row.getId()})}">Chỉnh
+                                sửa</a>
+                        </div>
+                    </td>
+
+                    <!--View-->
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#detailModal"
+                                    th:attr="onclick=|showDetail('${row.name}','${row.phone}',
+                                    '${row.startDay}','${row.payment.name}','${row.note}')|">Chi tiết
+                            </button>
+                        </div>
+                    </td>
+
+                    <!--Xóa-->
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <!--                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"-->
+                            <!--                                    th:attr="data-bs-target='#exampleModal'+${row.id}">Xóa-->
+                            <!--                            </button>-->
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                    data-bs-target="#deleteModal"
+                                    th:attr="onclick=|deleteRow('${row.getId()}','${row.getName()}')|">Xóa
+                            </button>
+                        </div>
+                    </td>
+
+                    <!--                    Xóa nhiều-->
+                    <td>
+                        <div class="d-flex justify-content-center">
+                            <input name="idDelete" class="form-check-input" type="checkbox" th:value="${row.id}">
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!--    Phân trang-->
+    <div class="row">
+        <div class="col-3 mt-3"></div>
+        <div class="col-2 mt-3 d-flex justify-content-end">
+            <div>
+                <a class="btn btn-secondary" role="button"
+                   th:href="@{/motel(page=${pages.number - 1},name=${name},paymentId=${paymentId})}"
+                   th:if="${pages.hasPrevious()}">Trang sau</a>
+            </div>
+        </div>
+        <div class="col-2 mt-3 d-flex justify-content-center">
+            <div>
+                <span th:text="${pages.number+1}"></span>/<span th:text="${pages.totalPages}"></span>
+            </div>
+        </div>
+        <div class="col-2 mt-3">
+            <a class="btn btn-secondary" role="button"
+               th:href="@{/motel(page=${pages.number + 1},name=${name},paymentId=${paymentId})}"
+               th:if="${pages.hasNext()}">Trang tiếp theo</a>
+        </div>
+        <div class="col-3 mt-3"></div>
+    </div>
+
+</div>
+
+
+<!--    Xoá nhiều Record-->
+<!--    Modal deletes-->
+<div class="modal fade" id="deletesModal" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1" aria-labelledby="staticBackdropLabel1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel1">Xoá Blog</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!--                    Bạn có muốn xoá employee có mã : <span id="titleBlogDeletes"></span> ?-->
+                Bạn có muốn xoá các mục đã chọn ?
+            </div>
+            <form action="/motel/deletes" method="get">
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng
+                    </button>
+                    <button type="submit" class="btn btn-danger">Xoá</button>
+                    <input hidden type="text" id="idChecked" name="idChecked">
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<!--    Modal delete-->
+<div class="modal fade" id="deleteModal" tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Thông báo:</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
+            </div>
+            <form th:action="@{motel/delete}" method="get">
+                <div class="modal-body">
+                    <p>Bạn có muốn xóa: <span id="nameDelete"></span></p>
+                    <input hidden type="text" id="idDelete" name="idDelete">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                        Hủy
+                    </button>
+                    <button type="submit" class="btn btn-primary">Xóa</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<!--    Modal detail-->
+<div class="modal fade" id="detailModal" tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Thông tin chi tiết:</h5>
+            </div>
+            <div class="modal-body">
+                <table class="table table-borderless">
+                    <tr>
+                        <td>Tên chủ phòng:</td>
+                        <td id="nameDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>Số điện thoại:</td>
+                        <td id="phoneDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>Ngày bắt đầu thuê:</td>
+                        <td id="startDayDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>Kiểu thanh toán:</td>
+                        <td id="paymentDetail"></td>
+                    </tr>
+                    <tr>
+                        <td>Ghi chú:</td>
+                        <td id="noteDetail"></td>
+                    </tr>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Đóng
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer th:replace="~{layout::footer}"></footer>
+<script>
+    document.getElementById("buttonDeletes").onclick = function () {
+        let idDeleteList = document.getElementsByName('idDelete');
+        let arr = [];
+        for (let key in idDeleteList) {
+            if (idDeleteList[key].checked === true) {
+                arr.push(idDeleteList[key].value);
+            }
+        }
+        document.getElementById('idChecked').value = arr.toString();
+    }
+
+    function deleteRow(id, name) {
+        document.getElementById("nameDelete").innerText = name;
+        document.getElementById("idDelete").value = id;
+    }
+
+    function showDetail(name,phone,startDay,payment,note) {
+        document.getElementById("nameDetail").innerText = name;
+        document.getElementById("phoneDetail").innerText = phone;
+        document.getElementById("startDayDetail").innerText = startDay;
+        document.getElementById("paymentDetail").innerText = payment;
+        document.getElementById("noteDetail").innerText = note;
+    }
+</script>
+</body>
+</html>

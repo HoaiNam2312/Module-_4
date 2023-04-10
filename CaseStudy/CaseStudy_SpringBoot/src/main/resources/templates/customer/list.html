@@ -119,19 +119,19 @@
                     <input type="text" class="form-control" placeholder="Nhập mã khách hàng"
                            aria-label="Recipient's username"
                            aria-describedby="button-addon2" name="idCard">
-                    <select th:if="${seachCustomerTypeId==0}" name="customerTypeId" class="form-select"
+                    <select th:if="${seachCustomerTypeId.equals('')}" name="customerTypeId" class="form-select"
                             aria-label="Default select example">
-                        <option th:value="0" selected>Tất cả</option>
+                        <option th:value="''">Loại khách hàng(Tất cả)</option>
                         <option th:each="temp : ${customerTypeList}" th:value="${temp.id}"
                                 th:text="${temp.name}"></option>
                     </select>
-                    <select th:if="${seachCustomerTypeId!=0}" name="customerTypeId" class="form-select"
+                    <select th:if="${!seachCustomerTypeId.equals('')}" name="customerTypeId" class="form-select"
                             aria-label="Default select example">
-                        <option th:each="temp : ${customerTypeList}" th:if="${seachCustomerTypeId==temp.id}"
+                        <option th:each="temp : ${customerTypeList}" th:if="${seachCustomerTypeId.equals(temp.id+'')}"
                                 th:value="${temp.id}" th:text="${temp.name}"></option>
-                        <option th:each="temp : ${customerTypeList}" th:if="${seachCustomerTypeId!=temp.id}"
+                        <option th:each="temp : ${customerTypeList}" th:if="${!seachCustomerTypeId.equals(temp.id+'')}"
                                 th:value="${temp.id}" th:text="${temp.name}"></option>
-                        <option th:value="0">Tất cả</option>
+                        <option th:value="''">Tất cả</option>
                     </select>
                     <button class="btn btn-outline-secondary" type="submit" id="button-addon2">Tìm kiếm</button>
                 </div>
@@ -150,7 +150,7 @@
                     <th rowspan="2" colspan="2">Họ và tên</th>
                     <th rowspan="2" colspan="2">Ngày sinh</th>
                     <th rowspan="2" colspan="2">Giới tính</th>
-                    <th rowspan="2" colspan="2">Loại khác hàng</th>
+                    <th rowspan="2" colspan="2">Loại khách hàng</th>
                     <th rowspan="2" colspan="2">Mã Khách hàng</th>
                     <th rowspan="2" colspan="2">SĐT</th>
                     <th rowspan="2" colspan="2">Email</th>

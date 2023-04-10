@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout::head}">
+</head>
+<body>
+<div th:replace="~{layout::menu}"></div>
+
+<div class="container bg-transparent mt-5">
+    <div class="row mt-1">
+        <div class="col-12">
+            <h1 style="text-align: center; color: deeppink">Chỉnh sửa sản phẩm</h1>
+        </div>
+    </div>
+    <div class="row mt-5" style="padding-left: 20px">
+        <div class="col-6">
+            <div class="row bg-transparent">
+                <form th:action="@{/product/edit}" th:object="${productDto}" method="post">
+                    <table class="table table-borderless">
+                        <tr hidden>
+                            <td></td>
+                            <td><input type="text"  th:field="*{id}"></td>
+                        </tr>
+
+                        <tr>
+                            <td><label for="name">Tên sản phẩm: </label></td>
+                            <td><input type="text" id="name" th:field="*{name}"
+                                       placeholder="Nhập tên chủ trọ">
+                                <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label for="birthday">Giá bắt đầu: </label></td>
+                            <td><input id="birthday" th:field="*{price}" type="number">
+                                <p style="color: red" th:if="${#fields.hasErrors('price')}"
+                                   th:errors="*{price}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label>Loại sản phẩm: </label></td>
+                            <td>
+                                <label>
+                                    <select th:field="*{productType}" class="form-select"
+                                            aria-label="Default select example">
+                                        <option th:value="${0}" selected>Chọn loại sản phẩm</option>
+                                        <option th:each="temp : ${productTypeList}" th:value="${temp.id}"
+                                                th:text="${temp.name}"></option>
+                                    </select>
+                                </label>
+                                <p style="color: red" th:if="${#fields.hasErrors('productType')}"
+                                   th:errors="*{productType}"></p></td>
+                        </tr>
+                        <tr>
+                            <td><label for="birthday1">Trạng thái: </label></td>
+                            <td><input id="birthday1" th:field="*{status}" type="text">
+                                <p style="color: red" th:if="${#fields.hasErrors('status')}"
+                                   th:errors="*{status}"></p></td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button class="btn btn-secondary" type="submit">Chỉnh sửa</button>
+                                <a class="btn btn-secondary" th:href="@{/product}" role="button">Hủy</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{layout::footer}"></footer>
+</body>
+</html>

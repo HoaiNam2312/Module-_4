@@ -27,4 +27,6 @@ public interface ICustomerService {
 //    Page<Customer> paginationByNameAndCustomerType_Id(String name,Integer id, Pageable pageable);
 //    Page<Customer> paginationByIdCardAndCustomerType_Id(String idCard,Integer id, Pageable pageable);
     Page<Customer> paginationByNameAndIdCardAndCustomerType_Id(String name,String idCard,Integer id, Pageable pageable);
+
+    Page<Customer> search(String name, String idCard, String customerTypeId, Pageable pageable);
 }

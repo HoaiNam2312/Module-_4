@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head th:replace="~{layout::head}">
+</head>
+<body>
+<div th:replace="~{layout::menu}"></div>
+
+<div class="container bg-transparent mt-5">
+    <div class="row mt-1">
+        <div class="col-12">
+            <h1 style="text-align: center; color: deeppink">Chỉnh sửa phòng trọ</h1>
+        </div>
+    </div>
+    <div class="row mt-5" style="padding-left: 20px">
+        <div class="col-6">
+            <div class="row bg-transparent">
+                <form th:action="@{/motel/edit}" th:object="${motelDto}" method="post">
+                    <table class="table table-borderless">
+                        <tr hidden>
+                            <td></td>
+                            <td><input type="text"  th:field="*{id}"
+                                       placeholder="Nhập tên chủ trọ">
+                                <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p></td>
+                        </tr>
+
+                        <tr>
+                            <td><label for="name">Tên: </label></td>
+                            <td><input type="text" id="name" th:field="*{name}"
+                                       placeholder="Nhập tên chủ trọ">
+                                <p style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></p></td>
+                        </tr>
+
+                        <tr>
+                            <td><label for="birthday">Số điện thoại: </label></td>
+                            <td><input id="birthday" th:field="*{phone}" type="text">
+                                <p style="color: red" th:if="${#fields.hasErrors('phone')}"
+                                   th:errors="*{phone}"></p></td>
+                        </tr>
+
+
+                        <tr>
+                            <td><label for="pn">Ngày bắt đầu: </label></td>
+                            <td><input type="text" id="pn" th:field="*{startDay}">
+                                <p style="color: red" th:if="${#fields.hasErrors('startDay')}" th:errors="*{startDay}"></p>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td><label>Hình thức thanh toán: </label></td>
+                            <td>
+                                <label>
+                                    <select th:field="*{payment}" class="form-select"
+                                            aria-label="Default select example">
+                                        <option th:value="${0}" selected>Chọn hình thức thanh toán</option>
+                                        <option th:each="temp : ${paymentList}" th:value="${temp.id}"
+                                                th:text="${temp.name}"></option>
+                                    </select>
+                                </label>
+                                <p style="color: red" th:if="${#fields.hasErrors('payment')}"
+                                   th:errors="*{payment}"></p></td>
+                        </tr>
+
+                        <tr>
+                            <td><label for="note">Ghi chú: </label></td>
+                            <td><textarea th:field="*{note}" id="note" name="note" rows="4" cols="50">
+                            </textarea>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td></td>
+                            <td>
+                                <button class="btn btn-secondary" type="submit">Tạo mới</button>
+                                <a class="btn btn-secondary" th:href="@{/motel}" role="button">Hủy</a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<footer th:replace="~{layout::footer}"></footer>
+</body>
+</html>
